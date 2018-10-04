@@ -1,0 +1,29 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="create-table-times" author="ykuzmich">
+        <createTable tableName="times" schemaName="${mainSchema}">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+
+            <column name="with_tz" type="${timestampWithTZ}"></column>
+            <column name="without_tz" type="${timestampWithoutTZ}"></column>
+            <column name="description" type="varchar"></column>
+            <column name="tz" type="varchar"></column>
+        </createTable>
+
+        <sql>set time zone "Australia/Sydney";</sql>
+
+        <insert tableName="times">
+            <column name="with_tz" valueComputed="now()"></column>
+            <column name="without_tz" valueComputed="now()"></column>
+            <column name="description">NOW() from DB</column>
+            <column name="tz" valueComputed="current_setting('TIMEZONE')"></column>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,138 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Time",
+		"_postman_id": "2f5a7cb2-f542-e2e9-0014-f2181f83c400",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "getAllTimes",
+			"request": {
+				"url": "localhost:8080/times",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "now From UI",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"postman.setGlobalVariable('now', (new Date()).toISOString());",
+							"postman.setGlobalVariable('timezone_offset', Intl.DateTimeFormat().resolvedOptions().timeZone);",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "localhost:8080/times",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json;charset=UTF-8",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\n        \"withTz\": \"{{now}}\",\n        \"withoutTz\": \"{{now}}\",\n        \"timezone\": \"{{timezone_offset}}\",\n        \"description\": \"NOW() from UI\"\n    }"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "NOW from Backend",
+			"request": {
+				"url": "localhost:8080/times/now",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json;charset=UTF-8",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "time From UI",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"postman.setGlobalVariable('now', (new Date()).toISOString());",
+							"postman.setGlobalVariable('timezone_offset', Intl.DateTimeFormat().resolvedOptions().timeZone);",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "localhost:8080/times",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json;charset=UTF-8",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\n        \"withTz\": \"2018-10-03T12:00:00.00\",\n        \"withoutTz\": \"2018-10-03T12:00:00.00\",\n        \"timezone\": \"{{timezone_offset}}\",\n        \"description\": \"custom time from UI\"\n    }"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "change Timezone",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"postman.setGlobalVariable('now', (new Date()).toISOString());",
+							"postman.setGlobalVariable('timezone_offset', Intl.DateTimeFormat().resolvedOptions().timeZone);",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "localhost:8080/times/change_timezone",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json;charset=UTF-8",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "Africa/Johannesburg"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
